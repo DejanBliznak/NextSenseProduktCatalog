@@ -1,0 +1,32 @@
+<div style="display: flex; justify-content: space-between;padding: 15px;">
+    <h2 style="flex: 1;">All Orders</h2>
+    <div style="flex: 1;display: flex;" class="w-100">
+        <h3 style="margin-right: 15px;margin-bottom: 0px; padding-top: 5px;"> Products: </h3>
+        <p-dropdown [options]="products" [(ngModel)]="product" optionLabel="name" placeholder="Select a Product" (onChange)="selectProduct()"
+            [showClear]="true" ></p-dropdown>
+    </div>
+    <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" label="Add New Order" (onClick)="addOrder()"> </p-button>
+</div>
+<div class="card">
+    <p-table [value]="orders" [paginator]="false" [rows]="5" [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:25%">Order Number</th>
+                <th style="width:25%">Order Date</th>
+                <th style="width:25%">Total </th>  
+                <th style="width:25%">Actions </th>             
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order>
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.orderDate  | date: 'HH:mm dd.MM.yyyy' }}</td>
+                <td>{{ order.orderTotal }}</td>     
+                <p-button type="button"  styleClass="p-button-text" label="Details" (onClick)="getOrderDetails(order.id)" > </p-button>        
+            </tr>
+        </ng-template>
+       
+    </p-table>
+    <p-paginator (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true"  currentPageReportTemplate="Showing {{first}} to {{rows}} of {{totalRecords}} entries" [first]="first" [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[5, 10, 20]"></p-paginator>
+</div>
